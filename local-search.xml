@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>test</title>
+    <link href="/2021/06/15/test/"/>
+    <url>/2021/06/15/test/</url>
+    
+    <content type="html"><![CDATA[<p>关于发布blog的测试</p><h2 id="H2"><a href="#H2" class="headerlink" title="H2"></a>H2</h2><h3 id="H3"><a href="#H3" class="headerlink" title="H3"></a>H3</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br>t1 = time.time()<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;test&quot;</span>)<br>t2 = time.time()<br><span class="hljs-built_in">print</span>(t2-t1)<br></code></pre></td></tr></table></figure><h3 id="h3"><a href="#h3" class="headerlink" title="h3"></a>h3</h3><p>ok</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Hello World</title>
     <link href="/2021/06/14/hello-world/"/>
     <url>/2021/06/14/hello-world/</url>
