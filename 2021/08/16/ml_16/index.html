@@ -5,14 +5,14 @@
 <meta property="og:site_name" content="TainTear&#39;s Blog">
 <meta property="og:description" content="背景与挖掘目标       随着互联网的快速发展，用户很难快速从海量信息中寻找到自己感兴趣的信息。因此诞生了: 搜索引擎+推荐系统 本章节-推荐系统:   帮助用户发现其感兴趣和可能感兴趣的信息。 让网站价值信息脱颖而出，得到广大用户的认可。 提高用户对网站的忠诚度和关注度，建立稳固用户群体。                      分析方法与过程">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/08/16/ml_16/img/%E6%8E%A8%E8%8D%90%E6%96%B9%E6%B3%95%E5%AF%B9%E6%AF%94.png">
-<meta property="og:image" content="http://example.com/2021/08/16/ml_16/img/%E5%9F%BA%E4%BA%8E%E7%9F%A5%E8%AF%86%E7%9A%84%E6%8E%A8%E8%8D%90.jpg">
+<meta property="og:image" content="http://example.com/img/%E6%8E%A8%E8%8D%90%E6%96%B9%E6%B3%95%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="http://example.com/img/%E5%9F%BA%E4%BA%8E%E7%9F%A5%E8%AF%86%E7%9A%84%E6%8E%A8%E8%8D%90.jpg">
 <meta property="article:published_time" content="2021-08-15T19:07:57.000Z">
-<meta property="article:modified_time" content="2021-08-28T19:36:52.907Z">
+<meta property="article:modified_time" content="2021-08-29T06:26:54.713Z">
 <meta property="article:author" content="TainTear">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/08/16/ml_16/img/%E6%8E%A8%E8%8D%90%E6%96%B9%E6%B3%95%E5%AF%B9%E6%AF%94.png"><title>第16章 推荐系统 | TainTear's Blog</title><link ref="canonical" href="http://example.com/2021/08/16/ml_16/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+<meta name="twitter:image" content="http://example.com/img/%E6%8E%A8%E8%8D%90%E6%96%B9%E6%B3%95%E5%AF%B9%E6%AF%94.png"><title>第16章 推荐系统 | TainTear's Blog</title><link ref="canonical" href="http://example.com/2021/08/16/ml_16/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
 var CONFIG = {
   root: '/',
   algolia: undefined,
@@ -100,12 +100,12 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <td></td>
 </tr>
 </tbody></table></div>
-<p><img src="img/%E6%8E%A8%E8%8D%90%E6%96%B9%E6%B3%95%E5%AF%B9%E6%AF%94.png" alt="推荐方法对比"></p>
+<p><img src="/img/%E6%8E%A8%E8%8D%90%E6%96%B9%E6%B3%95%E5%AF%B9%E6%AF%94.png" alt="推荐方法对比"></p>
 
         <h3 id="基于知识推荐"   >
           <a href="#基于知识推荐" class="heading-link"><i class="fas fa-link"></i></a><a href="#基于知识推荐" class="headerlink" title="基于知识推荐"></a>基于知识推荐</h3>
       <p>基于知识的推荐（Knowledge-based Recommendation）在某种程度是可以看成是一种推理（Inference）技术，它不是建立在用户需要和偏好基础上推荐的。基于知识的方法因它们所用的功能知识不同而有明显区别。效用知识（Functional Knowledge）是一种关于一个项目如何满足某一特定用户的知识，因此能解释需要和推荐的关系，所以用户资料可以是任何能支持推理的知识结构，它可以是用户已经规范化的查询，也可以是一个更详细的用户需要的表示。</p>
-<p><img src="img/%E5%9F%BA%E4%BA%8E%E7%9F%A5%E8%AF%86%E7%9A%84%E6%8E%A8%E8%8D%90.jpg" alt="基于知识的推荐"></p>
+<p><img src="/img/%E5%9F%BA%E4%BA%8E%E7%9F%A5%E8%AF%86%E7%9A%84%E6%8E%A8%E8%8D%90.jpg" alt="基于知识的推荐"></p>
 
         <h3 id="协同过滤推荐"   >
           <a href="#协同过滤推荐" class="heading-link"><i class="fas fa-link"></i></a><a href="#协同过滤推荐" class="headerlink" title="协同过滤推荐"></a>协同过滤推荐</h3>

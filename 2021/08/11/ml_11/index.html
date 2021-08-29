@@ -5,18 +5,18 @@
 <meta property="og:site_name" content="TainTear&#39;s Blog">
 <meta property="og:description" content="关联分析       关联分析是一种在大规模数据集中寻找有趣关系的任务。这些关系可以有两种形式:   频繁项集（frequent item sets）: 经常出现在一块的物品的集合。 关联规则（associational rules）: 暗示两种物品之间可能存在很强的关系。                      相关术语        关联分析（关联规">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/08/11/ml_11/img/apachecn_apriori_homepage.jpg">
-<meta property="og:image" content="http://example.com/2021/08/11/ml_11/img/apachecn_apriori_association_demo_1.jpg">
-<meta property="og:image" content="http://example.com/2021/08/11/ml_11/img/apachecn_apriori_goods_all_1.jpg">
-<meta property="og:image" content="http://example.com/2021/08/11/ml_11/img/%E9%9D%9E%E9%A2%91%E7%B9%81%E9%A1%B9%E9%9B%86.png">
-<meta property="og:image" content="http://example.com/2021/08/11/ml_11/img/apachecn_association_rule_demo_1.jpg">
-<meta property="og:image" content="http://example.com/2021/08/11/ml_11/img/%E6%89%80%E6%9C%89%E5%8F%AF%E8%83%BD%E7%9A%84%E9%A1%B9%E9%9B%86%E7%BB%84%E5%90%88.png">
+<meta property="og:image" content="http://example.com/img/apachecn_apriori_homepage.jpg">
+<meta property="og:image" content="http://example.com/img/apachecn_apriori_association_demo_1.jpg">
+<meta property="og:image" content="http://example.com/img/apachecn_apriori_goods_all_1.jpg">
+<meta property="og:image" content="http://example.com/img/%E9%9D%9E%E9%A2%91%E7%B9%81%E9%A1%B9%E9%9B%86.png">
+<meta property="og:image" content="http://example.com/img/apachecn_association_rule_demo_1.jpg">
+<meta property="og:image" content="http://example.com/img/%E6%89%80%E6%9C%89%E5%8F%AF%E8%83%BD%E7%9A%84%E9%A1%B9%E9%9B%86%E7%BB%84%E5%90%88.png">
 <meta property="article:published_time" content="2021-08-10T19:07:57.000Z">
-<meta property="article:modified_time" content="2021-08-28T19:36:24.236Z">
+<meta property="article:modified_time" content="2021-08-29T06:24:51.350Z">
 <meta property="article:author" content="TainTear">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/08/11/ml_11/img/apachecn_apriori_homepage.jpg"><title>第11章 使用 Apriori 算法进行关联分析 | TainTear's Blog</title><link ref="canonical" href="http://example.com/2021/08/11/ml_11/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+<meta name="twitter:image" content="http://example.com/img/apachecn_apriori_homepage.jpg"><title>第11章 使用 Apriori 算法进行关联分析 | TainTear's Blog</title><link ref="canonical" href="http://example.com/2021/08/11/ml_11/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
 var CONFIG = {
   root: '/',
   algolia: undefined,
@@ -40,7 +40,7 @@ var CONFIG = {
   sourcePath: {"js":"js","css":"css","images":"images"},
 };
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">Categories</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">Tags</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">TainTear's Blog</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">第11章 使用 Apriori 算法进行关联分析</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-08-11</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-08-29</span></span></div></header><div class="post-body"><p><img src="img/apachecn_apriori_homepage.jpg"></p>
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">Categories</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">Tags</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">TainTear's Blog</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">第11章 使用 Apriori 算法进行关联分析</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-08-11</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-08-29</span></span></div></header><div class="post-body"><p><img src="/img/apachecn_apriori_homepage.jpg"></p>
 
         <h2 id="关联分析"   >
           <a href="#关联分析" class="heading-link"><i class="fas fa-link"></i></a><a href="#关联分析" class="headerlink" title="关联分析"></a>关联分析</h2>
@@ -53,7 +53,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
         <h2 id="相关术语"   >
           <a href="#相关术语" class="heading-link"><i class="fas fa-link"></i></a><a href="#相关术语" class="headerlink" title="相关术语"></a>相关术语</h2>
       <ul>
-<li><p>关联分析（关联规则学习): 从大规模数据集中寻找物品间的隐含关系被称作 <code>关联分析(associati analysis)</code> 或者 <code>关联规则学习（association rule learning）</code> 。<br>下面是用一个 <code>杂货店</code> 例子来说明这两个概念，如下图所示:<br><img src="img/apachecn_apriori_association_demo_1.jpg" alt="关联分析示例1"></p>
+<li><p>关联分析（关联规则学习): 从大规模数据集中寻找物品间的隐含关系被称作 <code>关联分析(associati analysis)</code> 或者 <code>关联规则学习（association rule learning）</code> 。<br>下面是用一个 <code>杂货店</code> 例子来说明这两个概念，如下图所示:<br><img src="/img/apachecn_apriori_association_demo_1.jpg" alt="关联分析示例1"></p>
 </li>
 <li><p>频繁项集: {葡萄酒, 尿布, 豆奶} 就是一个频繁项集的例子。</p>
 </li>
@@ -69,8 +69,8 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 
         <h2 id="Apriori-原理"   >
           <a href="#Apriori-原理" class="heading-link"><i class="fas fa-link"></i></a><a href="#Apriori-原理" class="headerlink" title="Apriori 原理"></a>Apriori 原理</h2>
-      <p>假设我们一共有 4 个商品: 商品0, 商品1, 商品2, 商品3。<br>所有可能的情况如下:<br><img src="img/apachecn_apriori_goods_all_1.jpg" alt="4种商品的所有组合"><br>如果我们计算所有组合的支持度，也需要计算 15 次。即 2^N - 1 = 2^4 - 1 = 15。<br>随着物品的增加，计算的次数呈指数的形式增长 …<br>为了降低计算次数和时间，研究人员发现了一种所谓的 Apriori 原理，即某个项集是频繁的，那么它的所有子集也是频繁的。<br>例如，如果 {0, 1} 是频繁的，那么 {0}, {1} 也是频繁的。<br>该原理直观上没有什么帮助，但是如果反过来看就有用了，也就是说如果一个项集是 <code>非频繁项集</code>，那么它的所有超集也是非频繁项集，如下图所示:  </p>
-<p><img src="img/%E9%9D%9E%E9%A2%91%E7%B9%81%E9%A1%B9%E9%9B%86.png" alt="非频繁项集"></p>
+      <p>假设我们一共有 4 个商品: 商品0, 商品1, 商品2, 商品3。<br>所有可能的情况如下:<br><img src="/img/apachecn_apriori_goods_all_1.jpg" alt="4种商品的所有组合"><br>如果我们计算所有组合的支持度，也需要计算 15 次。即 2^N - 1 = 2^4 - 1 = 15。<br>随着物品的增加，计算的次数呈指数的形式增长 …<br>为了降低计算次数和时间，研究人员发现了一种所谓的 Apriori 原理，即某个项集是频繁的，那么它的所有子集也是频繁的。<br>例如，如果 {0, 1} 是频繁的，那么 {0}, {1} 也是频繁的。<br>该原理直观上没有什么帮助，但是如果反过来看就有用了，也就是说如果一个项集是 <code>非频繁项集</code>，那么它的所有超集也是非频繁项集，如下图所示:  </p>
+<p><img src="/img/%E9%9D%9E%E9%A2%91%E7%B9%81%E9%A1%B9%E9%9B%86.png" alt="非频繁项集"></p>
 <p>在图中我们可以看到，已知灰色部分 {2,3} 是 <code>非频繁项集</code>，那么利用上面的知识，我们就可以知道 {0,2,3} {1,2,3} {0,1,2,3} 都是 <code>非频繁的</code>。<br>也就是说，计算出 {2,3} 的支持度，知道它是 <code>非频繁</code> 的之后，就不需要再计算 {0,2,3} {1,2,3} {0,1,2,3} 的支持度，因为我们知道这些集合不会满足我们的要求。<br>使用该原理就可以避免项集数目的指数增长，从而在合理的时间内计算出频繁项集。</p>
 <p>Apriori 算法优缺点</p>
 <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 优点: 易编码实现</span><br><span class="line">* 缺点: 在大数据集上可能较慢</span><br><span class="line">* 适用数据类型: 数值型 或者 标称型数据。</span><br></pre></td></tr></table></div></figure>
@@ -138,7 +138,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 
         <h3 id="一个频繁项集可以产生多少条关联规则呢？"   >
           <a href="#一个频繁项集可以产生多少条关联规则呢？" class="heading-link"><i class="fas fa-link"></i></a><a href="#一个频繁项集可以产生多少条关联规则呢？" class="headerlink" title="一个频繁项集可以产生多少条关联规则呢？"></a>一个频繁项集可以产生多少条关联规则呢？</h3>
-      <p>如下图所示，给出的是项集 {0,1,2,3} 产生的所有关联规则:<br><img src="img/apachecn_association_rule_demo_1.jpg" alt="关联规则网格示意图"><br>与我们前面的 <code>频繁项集</code> 生成一样，我们可以为每个频繁项集产生许多关联规则。<br>如果能减少规则的数目来确保问题的可解析，那么计算起来就会好很多。<br>通过观察，我们可以知道，如果某条规则并不满足 <code>最小可信度</code> 要求，那么该规则的所有子集也不会满足 <code>最小可信度</code> 的要求。<br>如上图所示，假设 <code>123 -&gt; 3</code>  并不满足最小可信度要求，那么就知道任何左部为 {0,1,2} 子集的规则也不会满足 <code>最小可信度</code> 的要求。<br>即 <code>12 -&gt; 03</code> , <code>02 -&gt; 13</code> , <code>01 -&gt; 23</code> , <code>2 -&gt; 013</code>, <code> 1 -&gt; 023</code>, <code>0 -&gt; 123</code> 都不满足 <code>最小可信度</code> 要求。  </p>
+      <p>如下图所示，给出的是项集 {0,1,2,3} 产生的所有关联规则:<br><img src="/img/apachecn_association_rule_demo_1.jpg" alt="关联规则网格示意图"><br>与我们前面的 <code>频繁项集</code> 生成一样，我们可以为每个频繁项集产生许多关联规则。<br>如果能减少规则的数目来确保问题的可解析，那么计算起来就会好很多。<br>通过观察，我们可以知道，如果某条规则并不满足 <code>最小可信度</code> 要求，那么该规则的所有子集也不会满足 <code>最小可信度</code> 的要求。<br>如上图所示，假设 <code>123 -&gt; 3</code>  并不满足最小可信度要求，那么就知道任何左部为 {0,1,2} 子集的规则也不会满足 <code>最小可信度</code> 的要求。<br>即 <code>12 -&gt; 03</code> , <code>02 -&gt; 13</code> , <code>01 -&gt; 23</code> , <code>2 -&gt; 013</code>, <code> 1 -&gt; 023</code>, <code>0 -&gt; 123</code> 都不满足 <code>最小可信度</code> 要求。  </p>
 <p>可以利用关联规则的上述性质属性来减少需要测试的规则数目，跟先前 Apriori 算法的套路一样。<br>以下是一些辅助函数: </p>
 
         <h4 id="计算可信度"   >
@@ -156,7 +156,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <li>1.首先从一个频繁项集开始，接着创建一个规则列表，其中规则右部分只包含一个元素，然后对这个规则进行测试。</li>
 <li>2.接下来合并所有剩余规则来创建一个新的规则列表，其中规则右部包含两个元素。</li>
 <li>如下图: </li>
-<li><img src="img/%E6%89%80%E6%9C%89%E5%8F%AF%E8%83%BD%E7%9A%84%E9%A1%B9%E9%9B%86%E7%BB%84%E5%90%88.png" alt="所有可能的项集组合"></li>
+<li><img src="/img/%E6%89%80%E6%9C%89%E5%8F%AF%E8%83%BD%E7%9A%84%E9%A1%B9%E9%9B%86%E7%BB%84%E5%90%88.png" alt="所有可能的项集组合"></li>
 </ul>
 </li>
 <li>最后:  每次增加频繁项集的大小，Apriori 算法都会重新扫描整个数据集，是否有优化空间呢？ 下一章: FP-growth算法等着你的到来</li>

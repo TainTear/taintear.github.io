@@ -5,20 +5,20 @@
 <meta property="og:site_name" content="TainTear&#39;s Blog">
 <meta property="og:description" content="树回归 概述       我们本章介绍 CART(Classification And Regression Trees， 分类回归树) 的树构建算法。该算法既可以用于分类还可以用于回归。                     树回归 场景       我们在第 8 章中介绍了线性回归的一些强大的方法，但这些方法创建的模型需要拟合所有的样本点（局部加">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/08/09/ml_9/img/TreeRegression_headPage_xy.png">
-<meta property="og:image" content="http://example.com/2021/08/09/ml_9/img/RegTree_1.png">
-<meta property="og:image" content="http://example.com/2021/08/09/ml_9/img/RegTree_2.png">
-<meta property="og:image" content="http://example.com/2021/08/09/ml_9/img/RegTree_3.png">
-<meta property="og:image" content="http://example.com/2021/08/09/ml_9/img/RegTree_4.png">
-<meta property="og:image" content="http://example.com/2021/08/09/ml_9/img/RegTree_5.png">
-<meta property="og:image" content="http://example.com/2021/08/09/ml_9/img/GUI%E7%A4%BA%E4%BE%8B%E5%9B%BE.png">
-<meta property="og:image" content="http://example.com/2021/08/09/ml_9/img/GUI%E6%9B%B4%E5%A5%BD%E7%9A%84%E7%A4%BA%E4%BE%8B%E5%9B%BE.png">
+<meta property="og:image" content="http://example.com/img/TreeRegression_headPage_xy.png">
+<meta property="og:image" content="http://example.com/img/RegTree_1.png">
+<meta property="og:image" content="http://example.com/img/RegTree_2.png">
+<meta property="og:image" content="http://example.com/img/RegTree_3.png">
+<meta property="og:image" content="http://example.com/img/RegTree_4.png">
+<meta property="og:image" content="http://example.com/img/RegTree_5.png">
+<meta property="og:image" content="http://example.com/img/GUI%E7%A4%BA%E4%BE%8B%E5%9B%BE.png">
+<meta property="og:image" content="http://example.com/img/GUI%E6%9B%B4%E5%A5%BD%E7%9A%84%E7%A4%BA%E4%BE%8B%E5%9B%BE.png">
 <meta property="article:published_time" content="2021-08-08T19:07:57.000Z">
-<meta property="article:modified_time" content="2021-08-28T19:36:12.736Z">
+<meta property="article:modified_time" content="2021-08-29T06:23:48.765Z">
 <meta property="article:author" content="TainTear">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/08/09/ml_9/img/TreeRegression_headPage_xy.png"><title>第9章 树回归 | TainTear's Blog</title><link ref="canonical" href="http://example.com/2021/08/09/ml_9/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+<meta name="twitter:image" content="http://example.com/img/TreeRegression_headPage_xy.png"><title>第9章 树回归 | TainTear's Blog</title><link ref="canonical" href="http://example.com/2021/08/09/ml_9/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
 var CONFIG = {
   root: '/',
   algolia: undefined,
@@ -44,7 +44,7 @@ var CONFIG = {
 
 window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">Categories</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">Tags</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">TainTear's Blog</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">第9章 树回归</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-08-09</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-08-29</span></span></div></header><div class="post-body"><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
-<p><img src="img/TreeRegression_headPage_xy.png" alt="预测数值型数据回归首页" title="树回归首页"></p>
+<p><img src="/img/TreeRegression_headPage_xy.png" alt="预测数值型数据回归首页" title="树回归首页"></p>
 
         <h2 id="树回归-概述"   >
           <a href="#树回归-概述" class="heading-link"><i class="fas fa-link"></i></a><a href="#树回归-概述" class="headerlink" title="树回归 概述"></a>树回归 概述</h2>
@@ -124,8 +124,8 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <blockquote>
 <p>分析数据: 绘出数据的二维可视化显示结果，以字典方式生成树</p>
 </blockquote>
-<p>基于 CART 算法构建回归树的简单数据集<br><img src="img/RegTree_1.png" alt="基于 CART 算法构建回归树的简单数据集">  </p>
-<p>用于测试回归树的分段常数数据集<br><img src="img/RegTree_2.png" alt="用于测试回归树的分段常数数据集">  </p>
+<p>基于 CART 算法构建回归树的简单数据集<br><img src="/img/RegTree_1.png" alt="基于 CART 算法构建回归树的简单数据集">  </p>
+<p>用于测试回归树的分段常数数据集<br><img src="/img/RegTree_2.png" alt="用于测试回归树的分段常数数据集">  </p>
 <blockquote>
 <p>训练算法: 构造树的数据结构</p>
 </blockquote>
@@ -169,7 +169,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
       <p>用树来对数据建模，除了把叶节点简单地设定为常数值之外，还有一种方法是把叶节点设定为分段线性函数，这里所谓的 <code>分段线性（piecewise linear）</code> 是指模型由多个线性片段组成。</p>
 <p>我们看一下图 9-4 中的数据，如果使用两条直线拟合是否比使用一组常数来建模好呢？答案显而易见。可以设计两条分别从 0.0<del>0.3、从 0.3</del>1.0 的直线，于是就可以得到两个线性模型。因为数据集里的一部分数据（0.0<del>0.3）以某个线性模型建模，而另一部分数据（0.3</del>1.0）则以另一个线性模型建模，因此我们说采用了所谓的分段线性模型。</p>
 <p>决策树相比于其他机器学习算法的优势之一在于结果更易理解。很显然，两条直线比很多节点组成一棵大树更容易解释。模型树的可解释性是它优于回归树的特点之一。另外，模型树也具有更高的预测准确度。</p>
-<p><img src="img/RegTree_3.png" alt="分段线性数据"></p>
+<p><img src="/img/RegTree_3.png" alt="分段线性数据"></p>
 <p>将之前的回归树的代码稍作修改，就可以在叶节点生成线性模型而不是常数值。下面将利用树生成算法对数据进行划分，且每份切分数据都能很容易被线性模型所表示。这个算法的关键在于误差的计算。</p>
 <p>那么为了找到最佳切分，应该怎样计算误差呢？前面用于回归树的误差计算方法这里不能再用。稍加变化，对于给定的数据集，应该先用模型来对它进行拟合，然后计算真实的目标值与模型预测值间的差值。最后将这些差值的平方求和就得到了所需的误差。</p>
 
@@ -181,7 +181,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 
         <h3 id="3-3、模型树-运行结果"   >
           <a href="#3-3、模型树-运行结果" class="heading-link"><i class="fas fa-link"></i></a><a href="#3-3、模型树-运行结果" class="headerlink" title="3.3、模型树 运行结果"></a>3.3、模型树 运行结果</h3>
-      <p><img src="img/RegTree_4.png" alt="模型树运行结果"></p>
+      <p><img src="/img/RegTree_4.png" alt="模型树运行结果"></p>
 
         <h2 id="4、树回归-项目案例"   >
           <a href="#4、树回归-项目案例" class="heading-link"><i class="fas fa-link"></i></a><a href="#4、树回归-项目案例" class="headerlink" title="4、树回归 项目案例"></a>4、树回归 项目案例</h2>
@@ -210,7 +210,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <blockquote>
 <p>分析数据: 绘出数据的二维可视化显示结果，以字典方式生成树</p>
 </blockquote>
-<p><img src="img/RegTree_5.png" alt="骑自行车速度和智商之间的关系"></p>
+<p><img src="/img/RegTree_5.png" alt="骑自行车速度和智商之间的关系"></p>
 <blockquote>
 <p>训练算法: 模型树的构建</p>
 </blockquote>
@@ -232,7 +232,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
         <h3 id="5-1、使用-Python-的-Tkinter-库创建-GUI"   >
           <a href="#5-1、使用-Python-的-Tkinter-库创建-GUI" class="heading-link"><i class="fas fa-link"></i></a><a href="#5-1、使用-Python-的-Tkinter-库创建-GUI" class="headerlink" title="5.1、使用 Python 的 Tkinter 库创建 GUI"></a>5.1、使用 Python 的 Tkinter 库创建 GUI</h3>
       <p>如果能让用户不需要任何指令就可以按照他们自己的方式来分析数据，就不需要对数据做出过多解释。其中一个能同时支持数据呈现和用户交互的方式就是构建一个图形用户界面(GUI，Graphical User Interface)，如图9-7所示。</p>
-<p><img src="img/GUI%E7%A4%BA%E4%BE%8B%E5%9B%BE.png" alt="GUI示例图" title="GUI示例图"></p>
+<p><img src="/img/GUI%E7%A4%BA%E4%BE%8B%E5%9B%BE.png" alt="GUI示例图" title="GUI示例图"></p>
 
         <h3 id="5-2、用-Tkinter-创建-GUI"   >
           <a href="#5-2、用-Tkinter-创建-GUI" class="heading-link"><i class="fas fa-link"></i></a><a href="#5-2、用-Tkinter-创建-GUI" class="headerlink" title="5.2、用 Tkinter 创建 GUI"></a>5.2、用 Tkinter 创建 GUI</h3>
@@ -245,7 +245,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 
         <h3 id="5-4、用treeExplore-的GUI构建的模型树示例图"   >
           <a href="#5-4、用treeExplore-的GUI构建的模型树示例图" class="heading-link"><i class="fas fa-link"></i></a><a href="#5-4、用treeExplore-的GUI构建的模型树示例图" class="headerlink" title="5.4、用treeExplore 的GUI构建的模型树示例图"></a>5.4、用treeExplore 的GUI构建的模型树示例图</h3>
-      <p><img src="img/GUI%E6%9B%B4%E5%A5%BD%E7%9A%84%E7%A4%BA%E4%BE%8B%E5%9B%BE.png" alt="取得更好预测效果的GUI示例图" title="取得更好预测效果的GUI示例图"></p>
+      <p><img src="/img/GUI%E6%9B%B4%E5%A5%BD%E7%9A%84%E7%A4%BA%E4%BE%8B%E5%9B%BE.png" alt="取得更好预测效果的GUI示例图" title="取得更好预测效果的GUI示例图"></p>
 <p><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://github.com/apachecn/AiLearning/blob/master/src/py2.x/ml/9.RegTrees/treeExplore.py" >完整代码地址</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>: <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://github.com/apachecn/AiLearning/blob/master/src/py2.x/ml/9.RegTrees/treeExplore.py" >https://github.com/apachecn/AiLearning/blob/master/src/py2.x/ml/9.RegTrees/treeExplore.py</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
 
         <h2 id="6、树回归-小结"   >

@@ -5,17 +5,17 @@
 <meta property="og:site_name" content="TainTear&#39;s Blog">
 <meta property="og:description" content="聚类       聚类，简单来说，就是将一个庞杂数据集中具有相似特征的数据自动归类到一起，称为一个簇，簇内的对象越相似，聚类的效果越好。它是一种无监督的学习(Unsupervised Learning)方法,不需要预先标注好的训练集。聚类与分类最大的区别就是分类的目标事先已知，例如猫狗识别，你在分类之前已经预先知道要将它分为猫、狗两个种类；而在你聚类之前，">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/08/10/ml_10/img/K-Means_%E9%A6%96%E9%A1%B5.jpg">
-<meta property="og:image" content="http://example.com/2021/08/10/ml_10/img/apachecn-k-means-term-1.jpg">
-<meta property="og:image" content="http://example.com/2021/08/10/ml_10/img/apachecn-k-means-run-result-1.jpg">
-<meta property="og:image" content="http://example.com/2021/08/10/ml_10/img/apachecn-kmeans-partial-best-result-1.jpg">
-<meta property="og:image" content="http://example.com/2021/08/10/ml_10/img/apachecn-bikmeans-run-result-1.jpg">
+<meta property="og:image" content="http://example.com/img/K-Means_%E9%A6%96%E9%A1%B5.jpg">
+<meta property="og:image" content="http://example.com/img/apachecn-k-means-term-1.jpg">
+<meta property="og:image" content="http://example.com/img/apachecn-k-means-run-result-1.jpg">
+<meta property="og:image" content="http://example.com/img/apachecn-kmeans-partial-best-result-1.jpg">
+<meta property="og:image" content="http://example.com/img/apachecn-bikmeans-run-result-1.jpg">
 <meta property="article:published_time" content="2021-08-09T19:07:57.000Z">
-<meta property="article:modified_time" content="2021-08-28T19:36:18.736Z">
+<meta property="article:modified_time" content="2021-08-29T06:24:14.506Z">
 <meta property="article:author" content="TainTear">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/08/10/ml_10/img/K-Means_%E9%A6%96%E9%A1%B5.jpg"><title>第10章 K-Means（K-均值）聚类算法 | TainTear's Blog</title><link ref="canonical" href="http://example.com/2021/08/10/ml_10/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+<meta name="twitter:image" content="http://example.com/img/K-Means_%E9%A6%96%E9%A1%B5.jpg"><title>第10章 K-Means（K-均值）聚类算法 | TainTear's Blog</title><link ref="canonical" href="http://example.com/2021/08/10/ml_10/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
 var CONFIG = {
   root: '/',
   algolia: undefined,
@@ -39,7 +39,7 @@ var CONFIG = {
   sourcePath: {"js":"js","css":"css","images":"images"},
 };
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">Categories</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">Tags</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">TainTear's Blog</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">第10章 K-Means（K-均值）聚类算法</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-08-10</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-08-29</span></span></div></header><div class="post-body"><p><img src="img/K-Means_%E9%A6%96%E9%A1%B5.jpg" alt="K-Means（K-均值）聚类算法_首页"></p>
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">Categories</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">Tags</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">TainTear's Blog</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">第10章 K-Means（K-均值）聚类算法</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-08-10</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-08-29</span></span></div></header><div class="post-body"><p><img src="/img/K-Means_%E9%A6%96%E9%A1%B5.jpg" alt="K-Means（K-均值）聚类算法_首页"></p>
 
         <h2 id="聚类"   >
           <a href="#聚类" class="heading-link"><i class="fas fa-link"></i></a><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h2>
@@ -81,7 +81,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <li>SSE: Sum of Sqared Error（误差平方和）, 它被用来评估模型的好坏，SSE 值越小，表示越接近它们的质心. 聚类效果越好。由于对误差取了平方，因此更加注重那些远离中心的点（一般为边界点或离群点）。详情见kmeans的评价标准。</li>
 </ul>
 <p>有关 <code>簇</code> 和 <code>质心</code> 术语更形象的介绍, 请参考下图:</p>
-<p><img src="img/apachecn-k-means-term-1.jpg" alt="K-Means 术语图"></p>
+<p><img src="/img/apachecn-k-means-term-1.jpg" alt="K-Means 术语图"></p>
 
         <h3 id="K-Means-工作流程"   >
           <a href="#K-Means-工作流程" class="heading-link"><i class="fas fa-link"></i></a><a href="#K-Means-工作流程" class="headerlink" title="K-Means 工作流程"></a>K-Means 工作流程</h3>
@@ -144,14 +144,14 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <li>测试一下以上的基础函数是否可以如预期运行, 请看: <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://github.com/apachecn/AiLearning/blob/master/src/py2.x/ml/10.kmeans/kMeans.py" >https://github.com/apachecn/AiLearning/blob/master/src/py2.x/ml/10.kmeans/kMeans.py</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
 <li>测试一下 kMeans 函数是否可以如预期运行, 请看: <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://github.com/apachecn/AiLearning/blob/master/src/py2.x/ml/10.kmeans/kMeans.py" >https://github.com/apachecn/AiLearning/blob/master/src/py2.x/ml/10.kmeans/kMeans.py</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> </li>
 </ol>
-<p>参考运行结果如下:<br><img src="img/apachecn-k-means-run-result-1.jpg" alt="K-Means 运行结果1"></p>
+<p>参考运行结果如下:<br><img src="/img/apachecn-k-means-run-result-1.jpg" alt="K-Means 运行结果1"></p>
 
         <h3 id="K-Means-聚类算法的缺陷"   >
           <a href="#K-Means-聚类算法的缺陷" class="heading-link"><i class="fas fa-link"></i></a><a href="#K-Means-聚类算法的缺陷" class="headerlink" title="K-Means 聚类算法的缺陷"></a>K-Means 聚类算法的缺陷</h3>
       <blockquote>
 <p>在 kMeans 的函数测试中，可能偶尔会陷入局部最小值（局部最优的结果，但不是全局最优的结果）.</p>
 </blockquote>
-<p>局部最小值的的情况如下:<br><img src="img/apachecn-kmeans-partial-best-result-1.jpg" alt="K-Means 局部最小值1"><br>出现这个问题有很多原因，可能是k值取的不合适，可能是距离函数不合适，可能是最初随机选取的质心靠的太近，也可能是数据本身分布的问题。</p>
+<p>局部最小值的的情况如下:<br><img src="/img/apachecn-kmeans-partial-best-result-1.jpg" alt="K-Means 局部最小值1"><br>出现这个问题有很多原因，可能是k值取的不合适，可能是距离函数不合适，可能是最初随机选取的质心靠的太近，也可能是数据本身分布的问题。</p>
 <p>为了解决这个问题，我们可以对生成的簇进行后处理，一种方法是将具有最大<strong>SSE</strong>值的簇划分成两个簇。具体实现时可以将最大簇包含的点过滤出来并在这些点上运行K-均值算法，令k设为2。</p>
 <p>为了保持簇总数不变，可以将某两个簇进行合并。从上图中很明显就可以看出，应该将上图下部两个出错的簇质心进行合并。那么问题来了，我们可以很容易对二维数据上的聚类进行可视化， 但是如果遇到40维的数据应该如何去做？</p>
 <p>有两种可以量化的办法: 合并最近的质心，或者合并两个使得<strong>SSE</strong>增幅最小的质心。 第一种思路通过计算所有质心之间的距离， 然后合并距离最近的两个点来实现。第二种方法需要合并两个簇然后计算总<strong>SSE</strong>值。必须在所有可能的两个簇上重复上述处理过程，直到找到合并最佳的两个簇为止。</p>
@@ -186,7 +186,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
       <ul>
 <li>测试一下二分 KMeans 聚类算法，请看: <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://github.com/apachecn/AiLearning/blob/master/src/py2.x/ml/10.kmeans/kMeans.py" >https://github.com/apachecn/AiLearning/blob/master/src/py2.x/ml/10.kmeans/kMeans.py</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
 </ul>
-<p>上述函数可以运行多次，聚类会收敛到全局最小值，而原始的 kMeans() 函数偶尔会陷入局部最小值。<br>运行参考结果如下:<br><img src="img/apachecn-bikmeans-run-result-1.jpg" alt="二分 K-Means 运行结果1"></p>
+<p>上述函数可以运行多次，聚类会收敛到全局最小值，而原始的 kMeans() 函数偶尔会陷入局部最小值。<br>运行参考结果如下:<br><img src="/img/apachecn-bikmeans-run-result-1.jpg" alt="二分 K-Means 运行结果1"></p>
 <ul>
 <li><strong>作者: <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="http://cwiki.apachecn.org/display/~xuxin" >那伊抹微笑</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>,  <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="http://cwiki.apachecn.org/display/~xuzhaoqing" >清都江水郎</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></strong> </li>
 <li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://github.com/apachecn/AiLearning" >GitHub地址</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>: <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://github.com/apachecn/AiLearning" >https://github.com/apachecn/AiLearning</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>

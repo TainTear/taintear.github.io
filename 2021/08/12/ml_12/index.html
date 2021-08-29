@@ -5,20 +5,20 @@
 <meta property="og:site_name" content="TainTear&#39;s Blog">
 <meta property="og:description" content="前言       在 第11章 时我们已经介绍了用 Apriori 算法发现 频繁项集 与 关联规则。本章将继续关注发现 频繁项集 这一任务，并使用 FP-growth 算法更有效的挖掘 频繁项集。                     FP-growth 算法简介        一种非常好的发现频繁项集算法。 基于Apriori算法构建,但是数据结构不">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/08/12/ml_12/img/apachecn_fp_growth_homepage.png">
-<meta property="og:image" content="http://example.com/2021/08/12/ml_12/img/%E6%AD%A5%E9%AA%A41-3.png">
-<meta property="og:image" content="http://example.com/2021/08/12/ml_12/img/%E6%AD%A5%E9%AA%A44-5.png">
-<meta property="og:image" content="http://example.com/2021/08/12/ml_12/img/%E6%AD%A5%E9%AA%A46-1.png">
-<meta property="og:image" content="http://example.com/2021/08/12/ml_12/img/%E6%AD%A5%E9%AA%A46-2.png">
-<meta property="og:image" content="http://example.com/2021/08/12/ml_12/img/%E6%AD%A5%E9%AA%A46-2.png">
-<meta property="og:image" content="http://example.com/2021/08/12/ml_12/img/%E6%AD%A5%E9%AA%A47-1.png">
-<meta property="og:image" content="http://example.com/2021/08/12/ml_12/img/%E6%AD%A5%E9%AA%A47-2.png">
+<meta property="og:image" content="http://example.com/img/apachecn_fp_growth_homepage.png">
+<meta property="og:image" content="http://example.com/img/%E6%AD%A5%E9%AA%A41-3.png">
+<meta property="og:image" content="http://example.com/img/%E6%AD%A5%E9%AA%A44-5.png">
+<meta property="og:image" content="http://example.com/img/%E6%AD%A5%E9%AA%A46-1.png">
+<meta property="og:image" content="http://example.com/img/%E6%AD%A5%E9%AA%A46-2.png">
+<meta property="og:image" content="http://example.com/img/%E6%AD%A5%E9%AA%A46-2.png">
+<meta property="og:image" content="http://example.com/img/%E6%AD%A5%E9%AA%A47-1.png">
+<meta property="og:image" content="http://example.com/img/%E6%AD%A5%E9%AA%A47-2.png">
 <meta property="article:published_time" content="2021-08-11T19:07:57.000Z">
-<meta property="article:modified_time" content="2021-08-28T19:36:30.100Z">
+<meta property="article:modified_time" content="2021-08-29T06:25:17.949Z">
 <meta property="article:author" content="TainTear">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/08/12/ml_12/img/apachecn_fp_growth_homepage.png"><title>第12章 使用FP-growth算法来高效发现频繁项集 | TainTear's Blog</title><link ref="canonical" href="http://example.com/2021/08/12/ml_12/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+<meta name="twitter:image" content="http://example.com/img/apachecn_fp_growth_homepage.png"><title>第12章 使用FP-growth算法来高效发现频繁项集 | TainTear's Blog</title><link ref="canonical" href="http://example.com/2021/08/12/ml_12/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
 var CONFIG = {
   root: '/',
   algolia: undefined,
@@ -42,7 +42,7 @@ var CONFIG = {
   sourcePath: {"js":"js","css":"css","images":"images"},
 };
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">Categories</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">Tags</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">TainTear's Blog</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">第12章 使用FP-growth算法来高效发现频繁项集</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-08-12</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-08-29</span></span></div></header><div class="post-body"><p><img src="img/apachecn_fp_growth_homepage.png"></p>
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">Categories</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">Tags</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">TainTear's Blog</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">第12章 使用FP-growth算法来高效发现频繁项集</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-08-12</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-08-29</span></span></div></header><div class="post-body"><p><img src="/img/apachecn_fp_growth_homepage.png"></p>
 
         <h2 id="前言"   >
           <a href="#前言" class="heading-link"><i class="fas fa-link"></i></a><a href="#前言" class="headerlink" title="前言"></a>前言</h2>
@@ -77,17 +77,17 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <ol>
 <li>遍历所有的数据集合，计算所有项的支持度。</li>
 <li>丢弃非频繁的项。</li>
-<li>基于 支持度 降序排序所有的项。<br><img src="img/%E6%AD%A5%E9%AA%A41-3.png"></li>
+<li>基于 支持度 降序排序所有的项。<br><img src="/img/%E6%AD%A5%E9%AA%A41-3.png"></li>
 <li>所有数据集合按照得到的顺序重新整理。</li>
-<li>重新整理完成后，丢弃每个集合末尾非频繁的项。<br><img src="img/%E6%AD%A5%E9%AA%A44-5.png"></li>
+<li>重新整理完成后，丢弃每个集合末尾非频繁的项。<br><img src="/img/%E6%AD%A5%E9%AA%A44-5.png"></li>
 </ol>
-<p>步骤2:<br>   6. 读取每个集合插入FP树中，同时用一个头部链表数据结构维护不同集合的相同项。<br>      <img src="img/%E6%AD%A5%E9%AA%A46-1.png"><br>      最终得到下面这样一棵FP树<br>      <img src="img/%E6%AD%A5%E9%AA%A46-2.png"></p>
+<p>步骤2:<br>   6. 读取每个集合插入FP树中，同时用一个头部链表数据结构维护不同集合的相同项。<br>      <img src="/img/%E6%AD%A5%E9%AA%A46-1.png"><br>      最终得到下面这样一棵FP树<br>      <img src="/img/%E6%AD%A5%E9%AA%A46-2.png"></p>
 <p>从FP树中挖掘出频繁项集</p>
 <p>步骤3:</p>
 <ol>
 <li>对头部链表进行降序排序</li>
-<li>对头部链表节点从小到大遍历，得到条件模式基，同时获得一个频繁项集。<br>  <img src="img/%E6%AD%A5%E9%AA%A46-2.png"><br>  如上图，从头部链表 t 节点开始遍历，t 节点加入到频繁项集。找到以 t 节点为结尾的路径如下:<br>  <img src="img/%E6%AD%A5%E9%AA%A47-1.png"><br>  去掉FP树中的t节点，得到条件模式基&lt;左边路径, 右边是值&gt;[z,x,y,s,t]:2，[z,x,y,r,t]:1 。条件模式基的值取决于末尾节点 t ，因为 t 的出现次数最小，一个频繁项集的支持度由支持度最小的项决定。所以 t 节点的条件模式基的值可以理解为对于以 t 节点为末尾的前缀路径出现次数。</li>
-<li>条件模式基继续构造条件 FP树， 得到频繁项集，和之前的频繁项组合起来，这是一个递归遍历头部链表生成FP树的过程，递归截止条件是生成的FP树的头部链表为空。<br>  根据步骤 2 得到的条件模式基 [z,x,y,s,t]:2，[z,x,y,r,t]:1 作为数据集继续构造出一棵FP树，计算支持度，去除非频繁项，集合按照支持度降序排序，重复上面构造FP树的步骤。最后得到下面 t-条件FP树 :<br>  <img src="img/%E6%AD%A5%E9%AA%A47-2.png"><br>  然后根据 t-条件FP树 的头部链表进行遍历，从 y 开始。得到频繁项集 ty 。然后又得到 y 的条件模式基，构造出 ty的条件FP树，即 ty-条件FP树。继续遍历ty-条件FP树的头部链表，得到频繁项集 tyx，然后又得到频繁项集 tyxz. 然后得到构造tyxz-条件FP树的头部链表是空的，终止遍历。我们得到的频繁项集有 t-&gt;ty-&gt;tyz-&gt;tyzx，这只是一小部分。</li>
+<li>对头部链表节点从小到大遍历，得到条件模式基，同时获得一个频繁项集。<br>  <img src="/img/%E6%AD%A5%E9%AA%A46-2.png"><br>  如上图，从头部链表 t 节点开始遍历，t 节点加入到频繁项集。找到以 t 节点为结尾的路径如下:<br>  <img src="/img/%E6%AD%A5%E9%AA%A47-1.png"><br>  去掉FP树中的t节点，得到条件模式基&lt;左边路径, 右边是值&gt;[z,x,y,s,t]:2，[z,x,y,r,t]:1 。条件模式基的值取决于末尾节点 t ，因为 t 的出现次数最小，一个频繁项集的支持度由支持度最小的项决定。所以 t 节点的条件模式基的值可以理解为对于以 t 节点为末尾的前缀路径出现次数。</li>
+<li>条件模式基继续构造条件 FP树， 得到频繁项集，和之前的频繁项组合起来，这是一个递归遍历头部链表生成FP树的过程，递归截止条件是生成的FP树的头部链表为空。<br>  根据步骤 2 得到的条件模式基 [z,x,y,s,t]:2，[z,x,y,r,t]:1 作为数据集继续构造出一棵FP树，计算支持度，去除非频繁项，集合按照支持度降序排序，重复上面构造FP树的步骤。最后得到下面 t-条件FP树 :<br>  <img src="/img/%E6%AD%A5%E9%AA%A47-2.png"><br>  然后根据 t-条件FP树 的头部链表进行遍历，从 y 开始。得到频繁项集 ty 。然后又得到 y 的条件模式基，构造出 ty的条件FP树，即 ty-条件FP树。继续遍历ty-条件FP树的头部链表，得到频繁项集 tyx，然后又得到频繁项集 tyxz. 然后得到构造tyxz-条件FP树的头部链表是空的，终止遍历。我们得到的频繁项集有 t-&gt;ty-&gt;tyz-&gt;tyzx，这只是一小部分。</li>
 </ol>
 <ul>
 <li>条件模式基:头部链表中的某一点的前缀路径组合就是条件模式基，条件模式基的值取决于末尾节点的值。</li>

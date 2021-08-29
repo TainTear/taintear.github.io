@@ -5,21 +5,21 @@
 <meta property="og:site_name" content="TainTear&#39;s Blog">
 <meta property="og:description" content="支持向量机 概述       支持向量机(Support Vector Machines, SVM): 是一种监督学习算法。  支持向量(Support Vector)就是离分隔超平面最近的那些点。 机(Machine)就是表示一种算法，而不是表示机器。                      支持向量机 场景        要给左右两边的点进行分类">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/08/06/ml_6.1/img/SVM_1.jpg">
-<meta property="og:image" content="http://example.com/2021/08/06/ml_6.1/img/SVM_3_linearly-separable.jpg">
-<meta property="og:image" content="http://example.com/2021/08/06/ml_6.1/img/k_2.jpg">
-<meta property="og:image" content="http://example.com/2021/08/06/ml_6.1/img/SVM_2_separating-hyperplane.jpg">
+<meta property="og:image" content="http://example.com/img/SVM_1.jpg">
+<meta property="og:image" content="http://example.com/img/SVM_3_linearly-separable.jpg">
+<meta property="og:image" content="http://example.com/img/k_2.jpg">
+<meta property="og:image" content="http://example.com/img/SVM_2_separating-hyperplane.jpg">
 <meta property="og:image" content="http://example.com/2021/08/06/ml_6.1/img/SVM_4_point2line-distance.jpg">
-<meta property="og:image" content="http://example.com/2021/08/06/ml_6.1/img/SVM_5_Lagrangemultiplier.png">
-<meta property="og:image" content="http://example.com/2021/08/06/ml_6.1/img/SVM_%E6%9D%BE%E5%BC%9B%E5%8F%98%E9%87%8F.jpg">
-<meta property="og:image" content="http://example.com/2021/08/06/ml_6.1/img/%E6%9D%BE%E5%BC%9B%E5%8F%98%E9%87%8F.png">
-<meta property="og:image" content="http://example.com/2021/08/06/ml_6.1/img/SVM_6_radial-basis-function.jpg">
+<meta property="og:image" content="http://example.com/img/SVM_5_Lagrangemultiplier.png">
+<meta property="og:image" content="http://example.com/img/SVM_%E6%9D%BE%E5%BC%9B%E5%8F%98%E9%87%8F.jpg">
+<meta property="og:image" content="http://example.com/img/%E6%9D%BE%E5%BC%9B%E5%8F%98%E9%87%8F.png">
+<meta property="og:image" content="http://example.com/img/SVM_6_radial-basis-function.jpg">
 <meta property="article:published_time" content="2021-08-05T19:07:57.000Z">
-<meta property="article:modified_time" content="2021-08-28T19:35:45.821Z">
+<meta property="article:modified_time" content="2021-08-29T06:18:51.252Z">
 <meta property="article:author" content="TainTear">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/08/06/ml_6.1/img/SVM_1.jpg"><title>第6章 支持向量机 | TainTear's Blog</title><link ref="canonical" href="http://example.com/2021/08/06/ml_6.1/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+<meta name="twitter:image" content="http://example.com/img/SVM_1.jpg"><title>第6章 支持向量机 | TainTear's Blog</title><link ref="canonical" href="http://example.com/2021/08/06/ml_6.1/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
 var CONFIG = {
   root: '/',
   algolia: undefined,
@@ -45,7 +45,7 @@ var CONFIG = {
 
 window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">Categories</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">Tags</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">TainTear's Blog</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">第6章 支持向量机</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-08-06</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-08-29</span></span></div></header><div class="post-body"><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
-<p><img src="img/SVM_1.jpg" alt="支持向量机_首页"></p>
+<p><img src="/img/SVM_1.jpg" alt="支持向量机_首页"></p>
 
         <h2 id="支持向量机-概述"   >
           <a href="#支持向量机-概述" class="heading-link"><i class="fas fa-link"></i></a><a href="#支持向量机-概述" class="headerlink" title="支持向量机 概述"></a>支持向量机 概述</h2>
@@ -61,14 +61,14 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <li>要给左右两边的点进行分类</li>
 <li>明显发现: 选择D会比B、C分隔的效果要好很多。</li>
 </ul>
-<p><img src="img/SVM_3_linearly-separable.jpg" alt="线性可分"></p>
+<p><img src="/img/SVM_3_linearly-separable.jpg" alt="线性可分"></p>
 
         <h2 id="支持向量机-原理"   >
           <a href="#支持向量机-原理" class="heading-link"><i class="fas fa-link"></i></a><a href="#支持向量机-原理" class="headerlink" title="支持向量机 原理"></a>支持向量机 原理</h2>
       
         <h3 id="SVM-工作原理"   >
           <a href="#SVM-工作原理" class="heading-link"><i class="fas fa-link"></i></a><a href="#SVM-工作原理" class="headerlink" title="SVM 工作原理"></a>SVM 工作原理</h3>
-      <p><img src="img/k_2.jpg" alt="k_2" title="k_2"></p>
+      <p><img src="/img/k_2.jpg" alt="k_2" title="k_2"></p>
 <p>对于上述的苹果和香蕉，我们想象为2种水果类型的炸弹。（保证距离最近的炸弹，距离它们最远）</p>
 <ol>
 <li>寻找最大分类间距</li>
@@ -78,7 +78,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <li>数据可以通过画一条直线就可以将它们完全分开，这组数据叫<code>线性可分(linearly separable)</code>数据，而这条分隔直线称为<code>分隔超平面(separating hyperplane)</code>。</li>
 <li>如果数据集上升到1024维呢？那么需要1023维来分隔数据集，也就说需要N-1维的对象来分隔，这个对象叫做<code>超平面(hyperlane)</code>，也就是分类的决策边界。</li>
 </ul>
-<p><img src="img/SVM_2_separating-hyperplane.jpg" alt="分隔超平面"></p>
+<p><img src="/img/SVM_2_separating-hyperplane.jpg" alt="分隔超平面"></p>
 
         <h3 id="寻找最大间隔"   >
           <a href="#寻找最大间隔" class="heading-link"><i class="fas fa-link"></i></a><a href="#寻找最大间隔" class="headerlink" title="寻找最大间隔"></a>寻找最大间隔</h3>
@@ -137,7 +137,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <li>现在分2步</li>
 <li>先求:  $$min_{w, b} L(w,b,\alpha)=\frac{1}{2} * ||w||^2 + \sum_{i=1}^{n} \alpha_i * [1 - label * (w^Tx+b)]$$</li>
 <li>就是求<code>L(w,b,a)</code>关于[w, b]的偏导数, 得到<code>w和b的值</code>，并化简为: <code>L和a的方程</code>。</li>
-<li>参考:  如果公式推导还是不懂，也可以参考《统计学习方法》李航-P103&lt;学习的对偶算法&gt;<br><img src="img/SVM_5_Lagrangemultiplier.png" alt="计算拉格朗日函数的对偶函数"></li>
+<li>参考:  如果公式推导还是不懂，也可以参考《统计学习方法》李航-P103&lt;学习的对偶算法&gt;<br><img src="/img/SVM_5_Lagrangemultiplier.png" alt="计算拉格朗日函数的对偶函数"></li>
 </ul>
 </li>
 <li>终于得到课本上的公式:  $$max_{\alpha} \left( \sum_{i=1}^{m} \alpha_i - \frac{1}{2} \sum_{i, j=1}^{m} label_i \ast label_j \ast \alpha_i \ast \alpha_j \ast &lt;x_i, x_j&gt; \right) $$</li>
@@ -147,12 +147,12 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <p>松弛变量(slack variable)</p>
 </blockquote>
 <p>参考地址: <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="http://blog.csdn.net/wusecaiyun/article/details/49659183" >http://blog.csdn.net/wusecaiyun/article/details/49659183</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
-<p><img src="img/SVM_%E6%9D%BE%E5%BC%9B%E5%8F%98%E9%87%8F.jpg" alt="松弛变量公式"></p>
+<p><img src="/img/SVM_%E6%9D%BE%E5%BC%9B%E5%8F%98%E9%87%8F.jpg" alt="松弛变量公式"></p>
 <ul>
 <li>我们知道几乎所有的数据都不那么干净, 通过引入松弛变量来 <code>允许数据点可以处于分隔面错误的一侧</code>。</li>
 <li>约束条件:  $$C&gt;=a&gt;=0$$ 并且 $$\sum_{i=1}^{m} a_i \ast label_i=0$$</li>
 <li>总的来说: <ul>
-<li><img src="img/%E6%9D%BE%E5%BC%9B%E5%8F%98%E9%87%8F.png" alt="松弛变量"> 表示 <code>松弛变量</code></li>
+<li><img src="/img/%E6%9D%BE%E5%BC%9B%E5%8F%98%E9%87%8F.png" alt="松弛变量"> 表示 <code>松弛变量</code></li>
 <li>常量C是 <code>惩罚因子</code>, 表示离群点的权重（用于控制“最大化间隔”和“保证大部分点的函数间隔小于1.0” ）<ul>
 <li>$$label*(w^Tx+b) &gt; 1$$ and alpha = 0 (在边界外，就是非支持向量)</li>
 <li>$$label*(w^Tx+b) = 1$$ and 0&lt; alpha &lt; C (在分割超平面上，就支持向量)</li>
@@ -259,7 +259,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <li>核函数并不仅仅应用于支持向量机，很多其他的机器学习算法也都用到核函数。最流行的核函数: 径向基函数(radial basis function)</li>
 <li>径向基函数的高斯版本，其具体的公式为: </li>
 </ul>
-<p><img src="img/SVM_6_radial-basis-function.jpg" alt="径向基函数的高斯版本"></p>
+<p><img src="/img/SVM_6_radial-basis-function.jpg" alt="径向基函数的高斯版本"></p>
 
         <h3 id="项目案例-手写数字识别的优化（有核函数）"   >
           <a href="#项目案例-手写数字识别的优化（有核函数）" class="heading-link"><i class="fas fa-link"></i></a><a href="#项目案例-手写数字识别的优化（有核函数）" class="headerlink" title="项目案例: 手写数字识别的优化（有核函数）"></a>项目案例: 手写数字识别的优化（有核函数）</h3>

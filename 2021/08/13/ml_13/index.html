@@ -5,15 +5,15 @@
 <meta property="og:site_name" content="TainTear&#39;s Blog">
 <meta property="og:description" content="降维技术        场景   我们正通过电视观看体育比赛，在电视的显示器上有一个球。 显示器大概包含了100万像素点，而球则可能是由较少的像素点组成，例如说一千个像素点。 人们实时的将显示器上的百万像素转换成为一个三维图像，该图像就给出运动场上球的位置。 在这个过程中，人们已经将百万像素点的数据，降至为三维。这个过程就称为降维(dimensionali">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/08/13/ml_13/img/%E5%88%A9%E7%94%A8PCA%E7%AE%80%E5%8C%96%E6%95%B0%E6%8D%AE_%E9%A6%96%E9%A1%B5.jpg">
-<meta property="og:image" content="http://example.com/2021/08/13/ml_13/img/%E5%BA%94%E7%94%A8PCA%E9%99%8D%E7%BB%B4.png">
-<meta property="og:image" content="http://example.com/2021/08/13/ml_13/img/PCA%E5%88%86%E6%9E%90%E6%95%B0%E6%8D%AE%E8%BF%87%E7%A8%8B.jpg">
+<meta property="og:image" content="http://example.com/img/%E5%88%A9%E7%94%A8PCA%E7%AE%80%E5%8C%96%E6%95%B0%E6%8D%AE_%E9%A6%96%E9%A1%B5.jpg">
+<meta property="og:image" content="http://example.com/img/%E5%BA%94%E7%94%A8PCA%E9%99%8D%E7%BB%B4.png">
+<meta property="og:image" content="http://example.com/img/PCA%E5%88%86%E6%9E%90%E6%95%B0%E6%8D%AE%E8%BF%87%E7%A8%8B.jpg">
 <meta property="article:published_time" content="2021-08-12T19:07:57.000Z">
-<meta property="article:modified_time" content="2021-08-28T19:36:35.070Z">
+<meta property="article:modified_time" content="2021-08-29T06:25:44.064Z">
 <meta property="article:author" content="TainTear">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/08/13/ml_13/img/%E5%88%A9%E7%94%A8PCA%E7%AE%80%E5%8C%96%E6%95%B0%E6%8D%AE_%E9%A6%96%E9%A1%B5.jpg"><title>第13章 利用 PCA 来简化数据 | TainTear's Blog</title><link ref="canonical" href="http://example.com/2021/08/13/ml_13/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+<meta name="twitter:image" content="http://example.com/img/%E5%88%A9%E7%94%A8PCA%E7%AE%80%E5%8C%96%E6%95%B0%E6%8D%AE_%E9%A6%96%E9%A1%B5.jpg"><title>第13章 利用 PCA 来简化数据 | TainTear's Blog</title><link ref="canonical" href="http://example.com/2021/08/13/ml_13/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
 var CONFIG = {
   root: '/',
   algolia: undefined,
@@ -37,7 +37,7 @@ var CONFIG = {
   sourcePath: {"js":"js","css":"css","images":"images"},
 };
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">Categories</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">Tags</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">TainTear's Blog</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">第13章 利用 PCA 来简化数据</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-08-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-08-29</span></span></div></header><div class="post-body"><p><img src="img/%E5%88%A9%E7%94%A8PCA%E7%AE%80%E5%8C%96%E6%95%B0%E6%8D%AE_%E9%A6%96%E9%A1%B5.jpg" alt="利用PCA简化数据_首页"></p>
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">Categories</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">Tags</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">TainTear's Blog</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">第13章 利用 PCA 来简化数据</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-08-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-08-29</span></span></div></header><div class="post-body"><p><img src="/img/%E5%88%A9%E7%94%A8PCA%E7%AE%80%E5%8C%96%E6%95%B0%E6%8D%AE_%E9%A6%96%E9%A1%B5.jpg" alt="利用PCA简化数据_首页"></p>
 
         <h2 id="降维技术"   >
           <a href="#降维技术" class="heading-link"><i class="fas fa-link"></i></a><a href="#降维技术" class="headerlink" title="降维技术"></a>降维技术</h2>
@@ -146,7 +146,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <li>正交的一个原因是特征值的特征向量是正交的</li>
 </ol>
 <p>例如下图: </p>
-<p><img src="img/%E5%BA%94%E7%94%A8PCA%E9%99%8D%E7%BB%B4.png" alt="应用PCA降维"></p>
+<p><img src="/img/%E5%BA%94%E7%94%A8PCA%E9%99%8D%E7%BB%B4.png" alt="应用PCA降维"></p>
 <blockquote>
 <p>PCA 优缺点</p>
 </blockquote>
@@ -178,7 +178,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <blockquote>
 <p>分析数据: 统计分析 N 的阈值</p>
 </blockquote>
-<p><img src="img/PCA%E5%88%86%E6%9E%90%E6%95%B0%E6%8D%AE%E8%BF%87%E7%A8%8B.jpg" alt="PCA分析数据过程"></p>
+<p><img src="/img/PCA%E5%88%86%E6%9E%90%E6%95%B0%E6%8D%AE%E8%BF%87%E7%A8%8B.jpg" alt="PCA分析数据过程"></p>
 <blockquote>
 <p>PCA 数据降维</p>
 </blockquote>
